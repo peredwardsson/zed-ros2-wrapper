@@ -20,6 +20,7 @@ def generate_launch_description():
 
     camera_name = LaunchConfiguration('camera_name')
     camera_model = LaunchConfiguration('camera_model')
+    serial_number = LaunchConfiguration('serial_number')
 
     node_name = LaunchConfiguration('node_name')
 
@@ -59,6 +60,12 @@ def generate_launch_description():
     declare_camera_model_cmd = DeclareLaunchArgument(
         'camera_model',
         description='The model of the camera. Using a wrong camera model can disable camera features. Valid models: `zed`, `zedm`, `zed2`, `zed2i`.')
+
+    declare_serial_number_cmd = DeclareLaunchArgument(
+        'serial_number',
+        default_value='0'
+        description='The serial number of the camera. If you know the serial number and want only to connect to that camera, provide serial number.'
+    )
 
     declare_node_name_cmd = DeclareLaunchArgument(
         'node_name',
@@ -170,6 +177,7 @@ def generate_launch_description():
             {
                 'general.camera_name': camera_name,
                 'general.camera_model': camera_model,
+                'general.serial_number': serial_number,
                 'general.svo_file': svo_path,
                 'pos_tracking.base_frame': base_frame
             }
@@ -181,6 +189,7 @@ def generate_launch_description():
 
     ld.add_action(declare_camera_name_cmd)
     ld.add_action(declare_camera_model_cmd)
+    ld.add_action(declare_serial_number_cmd)
     ld.add_action(declare_node_name_cmd)
     ld.add_action(declare_publish_urdf_cmd)
     ld.add_action(declare_config_common_path_cmd)
